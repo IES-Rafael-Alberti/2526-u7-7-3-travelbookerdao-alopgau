@@ -7,7 +7,7 @@ data class ReservaHotelDAO(
     private val file: File
 ): DAO<ReservaHotel> {
 
-    override fun create(reserva: ReservaHotel) = file.appendText("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}")
+    override fun create(reserva: ReservaHotel) = file.appendText("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}\n")
 
     override fun read(criteria: (ReservaHotel) -> Boolean): ReservaHotel? {
         val lines = file.readLines()
@@ -27,14 +27,17 @@ data class ReservaHotelDAO(
             val targetIdx = lines.indexOf(target)
             lines[targetIdx] = ReservaHotel.recuperaInstancia(target.id, "${newDesc ?: target.descripcion}", "${newUbi ?: target.ubicacion}", newNights ?: target.numeroNoches)
         }
-        lines.forEach {reserva -> file.writeText( "${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}") }
+        file.writeText("")
+        lines.forEach {reserva -> file.appendText("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}\n") }
 
 
 
     }
 
     override fun delete(criteria: (ReservaHotel) -> Boolean) {
-        val newList = parseFile().filter(!criteria)
+        file.writeText("")
+        val newList = parseFile().filterNot(criteria)
+        newList.forEach { reserva -> file.appendText("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}\n") }
     }
  override fun parseFile(): List<ReservaHotel> {
     val lines = file.readLines()

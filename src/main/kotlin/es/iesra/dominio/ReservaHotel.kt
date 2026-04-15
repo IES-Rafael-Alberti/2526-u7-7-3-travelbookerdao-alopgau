@@ -37,7 +37,7 @@ class ReservaHotel private constructor(
             return reserva
         }
         fun recuperaInstancia(id: Int, descripcion: String, ubicacion: String,numeroNoches: Int): ReservaHotel {
-            require("$id,$descripcion,$ubicacion,$numeroNoches" in File("travelbooker.csv").readLines())
+            require("$id,$descripcion,$ubicacion,$numeroNoches" in File("travelbooker_hoteles.csv").readLines())
             return ReservaHotel(id,descripcion,ubicacion,numeroNoches)
         }
     }
