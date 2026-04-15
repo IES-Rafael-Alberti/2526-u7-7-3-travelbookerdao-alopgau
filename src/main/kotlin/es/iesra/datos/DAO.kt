@@ -1,8 +1,10 @@
 package es.iesra.datos
 
+
 interface DAO <T> {
-    fun create()
-    fun read(criteria: (String) -> Boolean): T?
-    fun update(criteria: (String) -> Boolean, newDesc: String?, newUbi: String?, newNights: String?)
-    fun delete(criteria: (String) -> Boolean): List<String>
+    fun create(reserva: T)
+    fun read(criteria: (T) -> Boolean): T?
+    fun update(criteria: (T) -> Boolean, newDesc: String?, newUbi: String?, newNights: Int?)
+    fun parseFile(): List<T>
+    fun delete(criteria: (T) -> Boolean)
 }
