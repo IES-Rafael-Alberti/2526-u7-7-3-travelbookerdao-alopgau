@@ -1,5 +1,6 @@
 package es.iesra.dominio
 
+import java.io.File
 import java.time.LocalDateTime
 
 /**
@@ -34,6 +35,10 @@ class ReservaHotel private constructor(
             val reserva = ReservaHotel(contador, descripcion, ubicacion, numeroNoches)
             contador++
             return reserva
+        }
+        fun recuperaInstancia(id: Int, descripcion: String, ubicacion: String,numeroNoches: Int): ReservaHotel {
+            require("$id,$descripcion,$ubicacion,$numeroNoches" in File("travelbooker.csv").readLines())
+            return ReservaHotel(id,descripcion,ubicacion,numeroNoches)
         }
     }
 }
