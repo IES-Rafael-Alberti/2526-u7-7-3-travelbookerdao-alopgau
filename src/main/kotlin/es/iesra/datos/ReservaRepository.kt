@@ -30,19 +30,11 @@ class ReservaRepository(private val hotelDAO: DAO<ReservaHotel>, private val fli
     }
 
 
-    override fun delete(reserva: Reserva) {
+    override fun delete(reserva: Reserva?) {
         when (reserva) {
             is ReservaHotel -> hotelDAO.delete(reserva)
             is ReservaVuelo -> flightDAO.delete((reserva))
             else -> ""
     }
-    }
-
-    override fun deleteAllIn(reservas: List<Reserva>) {
-       reservas.forEach { reserva -> when (reserva) {
-           is ReservaHotel -> hotelDAO.delete(reserva)
-           is ReservaVuelo -> flightDAO.delete((reserva))
-           else -> ""
-       } }
     }
 }

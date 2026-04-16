@@ -9,6 +9,5 @@ interface IReservaRepository {
     fun obtenerTodas(): List<Reserva>
     fun findById(id: Int): Reserva?
     fun register(reserva: Reserva)
-    fun delete(reserva: Reserva)
-    fun deleteAllIn(reservas: List<Reserva>)
+    fun delete(reserva: Reserva?)
 }

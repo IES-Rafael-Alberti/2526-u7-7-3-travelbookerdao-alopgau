@@ -21,4 +21,7 @@ class ReservaService(private val repositorio: IReservaRepository) : IReservaServ
     }
 
     override fun listarReservas() = repositorio.obtenerTodas()
+    override fun borrarReserva(id: Int) {
+        repositorio.delete(repositorio.findById(id))
+    }
 }

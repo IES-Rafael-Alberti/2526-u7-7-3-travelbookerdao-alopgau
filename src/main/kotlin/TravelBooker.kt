@@ -1,5 +1,7 @@
 import es.iesra.datos.DAO
+import es.iesra.datos.ReservaHotelDAO
 import es.iesra.datos.ReservaRepository
+import es.iesra.datos.ReservaVueloDAO
 import es.iesra.presentacion.ConsolaUI
 import es.iesra.presentacion.IUserInterface
 import es.iesra.servicio.IReservaService
@@ -11,7 +13,7 @@ import es.iesra.servicio.ReservaService
  */
 fun main() {
     // Crear la instancia del repositorio (capa de datos).
-    val repositorio = ReservaRepository()
+    val repositorio = ReservaRepository(ReservaHotelDAO(), ReservaVueloDAO())
 
     // Inyectar la dependencia en el servicio a través de la interfaz.
     val reservaService: IReservaService = ReservaService(repositorio)

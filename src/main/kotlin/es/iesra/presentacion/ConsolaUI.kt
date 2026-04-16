@@ -17,7 +17,8 @@ class ConsolaUI(private val reservaService: IReservaService) : IUserInterface {
             when (leerOpcion()) {
                 1 -> crearReserva()
                 2 -> listarReservas()
-                3 -> {
+                3 -> borrarReservas()
+                4 ->    {
                     println("Saliendo de la aplicación. ¡Hasta luego!")
                     salir = true
                 }
@@ -103,4 +104,9 @@ class ConsolaUI(private val reservaService: IReservaService) : IUserInterface {
             reservas.forEach { println(it.toString()) }
         }
     }
+private fun borrarReservas() {
+    println("Introduce el id de la reserva a borrar:")
+    val entrada = readln().toIntOrNull()?:-1
+    reservaService.borrarReserva(entrada)
+}
 }
