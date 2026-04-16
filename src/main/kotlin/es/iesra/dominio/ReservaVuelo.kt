@@ -26,7 +26,7 @@ class ReservaVuelo private constructor(
 
     companion object {
         // Generador de ids únicos para ReservaVuelo.
-        private var contador: Int = 0
+        private var contador: Int = 1
 
         /**
          * Método de clase para crear una nueva instancia de ReservaVuelo.
@@ -37,7 +37,7 @@ class ReservaVuelo private constructor(
             val regex = Regex("^([01]?\\d|2[0-3]):[0-5]\\d\$")
             require(regex.matches(horaVuelo)) { "El formato de la hora debe ser HH:mm" }
             val reserva = ReservaVuelo(contador, descripcion, origen, destino, horaVuelo)
-            contador += 2
+            contador++
             return reserva
         }
 
