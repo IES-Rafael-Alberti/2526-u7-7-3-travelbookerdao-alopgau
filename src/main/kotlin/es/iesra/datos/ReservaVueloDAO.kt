@@ -27,9 +27,9 @@ import java.io.File
          }
          return linesMap
      }
-     override fun delete(reservasABorrar: List<ReservaVuelo>) {
+     override fun delete(reservaABorrar: ReservaVuelo) {
          val lines = read()
-         val reservasFiltradas = lines.filter { it !in reservasABorrar }
+         val reservasFiltradas = lines.filter { it != reservaABorrar }
          file.writeText("")
          reservasFiltradas.forEach { reserva -> file.appendText("${reserva.id},${reserva.descripcion},${reserva.origen},${reserva.destino}, ${reserva.horaVuelo}\n") }
      }
