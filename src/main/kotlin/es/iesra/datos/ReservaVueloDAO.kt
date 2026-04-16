@@ -3,7 +3,21 @@ import es.iesra.dominio.ReservaHotel
 import es.iesra.dominio.ReservaVuelo
 import java.io.File
  class ReservaVueloDAO(private val file: File): DAO<ReservaVuelo> {
-    override fun create(reserva: ReservaVuelo) = file.appendText("${reserva.id},${reserva.descripcion},${reserva.origen},${reserva.destino}, ${reserva.horaVuelo}\n")
+    override fun create(reserva: ReservaVuelo) {
+        if ("${reserva.id},${reserva.descripcion},${reserva.origen},${reserva.destino},${reserva.horaVuelo}" !in file.readLines()) {
+            file.appendText("${reserva.id},${reserva.descripcion},${reserva.origen},${reserva.destino},${reserva.horaVuelo}\n")
+        } else {
+            val lines = file.readLines().toMutableList()
+            val target = lines.find {
+                val lineSplit = it.split(",")
+                (lineSplit[0].toInt() == reserva.id)
+            }
+            val targetIdx = lines.indexOf(target)
+            lines[targetIdx] = "${reserva.id},${reserva.descripcion},${reserva.origen},${reserva.destino},${reserva.horaVuelo}"
+            file.writeText("")
+            lines.forEach { file.appendText(it) }
+        }
+    }
      override fun read(): List<ReservaVuelo> {
          val lines = file.readLines()
          val linesMap = lines.map {
@@ -12,18 +26,11 @@ import java.io.File
          }
          return linesMap
      }
-
-     override fun update(
-     {
-         val lines = parseFile().toMutableList()
-
-         val target = lines.find(criteria)
-         if (target != null) {
-             val targetIdx = lines.indexOf(target)
-             lines[targetIdx] = ReservaVuelo.recuperaInstancia(target.id, "${newDesc ?: target.descripcion}", "${newUbi ?: target.ubicacion}", newNights ?: target.numeroNoches)
-         }
+     override fun delete(reservasABorrar: List<ReservaVuelo>) {
+         val lines = read()
+         val reservasFiltradas = lines.filter { it !in reservasABorrar }
          file.writeText("")
-         lines.forEach {reserva -> file.appendText("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}\n") }
+         reservasFiltradas.forEach { reserva -> file.appendText("${reserva.id},${reserva.descripcion},${reserva.origen},${reserva.destino}, ${reserva.horaVuelo}\n") }
      }
 
-}
+ }
