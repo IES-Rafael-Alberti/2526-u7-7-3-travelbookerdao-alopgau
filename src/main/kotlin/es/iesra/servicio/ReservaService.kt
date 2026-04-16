@@ -12,12 +12,12 @@ class ReservaService(private val repositorio: IReservaRepository) : IReservaServ
 
     override fun crearReservaVuelo(descripcion: String, origen: String, destino: String, horaVuelo: String) {
         val reservaVuelo = ReservaVuelo.creaInstancia(descripcion, origen, destino, horaVuelo)
-        repositorio.agregar(reservaVuelo)
+        repositorio.register(reservaVuelo)
     }
 
     override fun crearReservaHotel(descripcion: String, ubicacion: String, numeroNoches: Int) {
         val reservaHotel = ReservaHotel.creaInstancia(descripcion, ubicacion, numeroNoches)
-        repositorio.agregar(reservaHotel)
+        repositorio.register(reservaHotel)
     }
 
     override fun listarReservas() = repositorio.obtenerTodas()

@@ -7,4 +7,9 @@ import es.iesra.dominio.Reserva
  */
 interface IReservaRepository {
     fun obtenerTodas(): List<Reserva>
+    fun findById(id: Int): Reserva?
+    fun register(reserva: Reserva)
+    fun <T> findByCustom(criteria: (Reserva) -> Boolean): Reserva?
+    fun delete(reserva: Reserva)
+    fun deleteAllIn(reservas: List<Reserva>)
 }

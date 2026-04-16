@@ -33,7 +33,7 @@ class ReservaHotel private constructor(
         fun creaInstancia(descripcion: String, ubicacion: String, numeroNoches: Int): ReservaHotel {
             require(numeroNoches > 0) { "El número de noches debe ser mayor a 0" }
             val reserva = ReservaHotel(contador, descripcion, ubicacion, numeroNoches)
-            contador++
+            contador += 2
             return reserva
         }
         fun recuperaInstancia(id: Int, descripcion: String, ubicacion: String,numeroNoches: Int): ReservaHotel {
