@@ -3,9 +3,9 @@ package es.iesra.datos
 import es.iesra.dominio.ReservaHotel
 import java.io.File
 
-data class ReservaHotelDAO(
-    private val file: File
+ class ReservaHotelDAO(
 ): DAO<ReservaHotel> {
+    private val file = File("travelbooker_hoteles.csv")
 
     override fun create(reserva: ReservaHotel) {
         if ("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}" !in file.readLines()) {
