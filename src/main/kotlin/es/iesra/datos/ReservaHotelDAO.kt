@@ -7,44 +7,40 @@ data class ReservaHotelDAO(
     private val file: File
 ): DAO<ReservaHotel> {
 
-    override fun create(reserva: ReservaHotel) = file.appendText("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}\n")
+    override fun create(reserva: ReservaHotel) {
+        if ("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}" !in file.readLines()) {
+        file.appendText("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}\n")
+        } else {
+         val lines = file.readLines().toMutableList()
+         val target = lines.find {
+             val lineSplit = it.split(",")
+             (lineSplit[0].toInt() == reserva.id)
+         }
+         val targetIdx = lines.indexOf(target)
+         lines[targetIdx] =  "${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}"
+            file.writeText("")
+            lines.forEach { file.appendText(it) }
 
-    override fun read(criteria: (ReservaHotel) -> Boolean): ReservaHotel? {
+        }
+    }
+
+    override fun read(): List<ReservaHotel> {
         val lines = file.readLines()
         val linesMap = lines.map {
             val lineSplit = it.split(",")
         ReservaHotel.recuperaInstancia(lineSplit[0].toInt(),lineSplit[1],lineSplit[2],lineSplit[3].toInt())
         }
-        return linesMap.find(criteria)
+        return linesMap
 
         }
 
-    override fun update(criteria: (ReservaHotel) -> Boolean, newDesc: String?, newUbi: String?, newNights: Int?) {
-        val lines = parseFile().toMutableList()
-
-        val target = lines.find(criteria)
-        if (target != null) {
-            val targetIdx = lines.indexOf(target)
-            lines[targetIdx] = ReservaHotel.recuperaInstancia(target.id, "${newDesc ?: target.descripcion}", "${newUbi ?: target.ubicacion}", newNights ?: target.numeroNoches)
-        }
+    override fun delete(reservasABorrar: List<ReservaHotel>) {
+        val lines = read()
+        val reservasFiltradas = lines.filter { it !in reservasABorrar }
         file.writeText("")
-        lines.forEach {reserva -> file.appendText("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}\n") }
-
-
+        reservasFiltradas.forEach { reserva -> file.appendText("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}\n") }
+    }
 
     }
 
-    override fun delete(criteria: (ReservaHotel) -> Boolean) {
-        file.writeText("")
-        val newList = parseFile().filterNot(criteria)
-        newList.forEach { reserva -> file.appendText("${reserva.id},${reserva.descripcion},${reserva.ubicacion},${reserva.numeroNoches}\n") }
-    }
- override fun parseFile(): List<ReservaHotel> {
-    val lines = file.readLines()
-    val linesMap = lines.map {
-        val lineSplit = it.split(",")
-        ReservaHotel.recuperaInstancia(lineSplit[0].toInt(),lineSplit[1],lineSplit[2],lineSplit[3].toInt())
-    }
-     return linesMap
-    }
-}
+
