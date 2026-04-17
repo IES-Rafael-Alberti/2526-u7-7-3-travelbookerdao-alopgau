@@ -1,5 +1,6 @@
 package es.iesra.dominio
 
+import java.io.File
 import java.time.LocalDateTime
 
 /**
@@ -24,16 +25,19 @@ class ReservaHotel private constructor(
 
     companion object {
         // Generador de ids únicos para ReservaHotel.
-        private var contador: Int = 1
+         var contador: Int = 0
 
         /**
          * Método de clase para crear una nueva instancia de ReservaHotel.
          */
-        fun creaInstancia(descripcion: String, ubicacion: String, numeroNoches: Int): ReservaHotel {
+        fun creaInstancia( descripcion: String, ubicacion: String, numeroNoches: Int): ReservaHotel {
             require(numeroNoches > 0) { "El número de noches debe ser mayor a 0" }
+            contador += 2
             val reserva = ReservaHotel(contador, descripcion, ubicacion, numeroNoches)
-            contador++
             return reserva
+        }
+        fun recuperaInstancia(id: Int, descripcion: String, ubicacion: String,numeroNoches: Int): ReservaHotel {
+            return ReservaHotel(id,descripcion,ubicacion,numeroNoches)
         }
     }
 }

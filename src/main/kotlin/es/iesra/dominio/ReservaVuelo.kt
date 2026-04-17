@@ -1,5 +1,6 @@
 package es.iesra.dominio
 
+import java.io.File
 import java.time.LocalDateTime
 
 /**
@@ -25,7 +26,7 @@ class ReservaVuelo private constructor(
 
     companion object {
         // Generador de ids únicos para ReservaVuelo.
-        private var contador: Int = 1
+         var contador: Int = 1
 
         /**
          * Método de clase para crear una nueva instancia de ReservaVuelo.
@@ -35,9 +36,13 @@ class ReservaVuelo private constructor(
             // Validación simple del formato de hora (HH:mm)
             val regex = Regex("^([01]?\\d|2[0-3]):[0-5]\\d\$")
             require(regex.matches(horaVuelo)) { "El formato de la hora debe ser HH:mm" }
+            contador += 2
             val reserva = ReservaVuelo(contador, descripcion, origen, destino, horaVuelo)
-            contador++
             return reserva
+        }
+
+        fun recuperaInstancia(id: Int, descripcion: String, origen: String, destino: String, horaVuelo: String): ReservaVuelo {
+            return ReservaVuelo(id,descripcion,origen,destino,horaVuelo)
         }
     }
 }

@@ -11,14 +11,19 @@ import es.iesra.dominio.ReservaVuelo
 class ReservaService(private val repositorio: IReservaRepository) : IReservaService {
 
     override fun crearReservaVuelo(descripcion: String, origen: String, destino: String, horaVuelo: String) {
+       ReservaVuelo.contador = repositorio.maxId(repositorio.obtenerTodas().filter { it.id % 2 == 1 })
         val reservaVuelo = ReservaVuelo.creaInstancia(descripcion, origen, destino, horaVuelo)
-        repositorio.agregar(reservaVuelo)
+        repositorio.register(reservaVuelo)
     }
 
     override fun crearReservaHotel(descripcion: String, ubicacion: String, numeroNoches: Int) {
+        ReservaHotel.contador = repositorio.maxId(repositorio.obtenerTodas().filter { it.id % 2 == 0 })
         val reservaHotel = ReservaHotel.creaInstancia(descripcion, ubicacion, numeroNoches)
-        repositorio.agregar(reservaHotel)
+        repositorio.register(reservaHotel)
     }
 
     override fun listarReservas() = repositorio.obtenerTodas()
+    override fun borrarReserva(id: Int) {
+        repositorio.delete(repositorio.findById(id))
+    }
 }
