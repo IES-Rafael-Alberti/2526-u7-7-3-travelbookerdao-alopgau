@@ -11,17 +11,17 @@ import java.io.File
                 (lineSplit[0].toIntOrNull()?:-1 == reserva.id)
             }
         if (target == null) {
-            file.appendText("${reserva.id},${reserva.descripcion},${reserva.origen},${reserva.destino},${reserva.horaVuelo}\n")
+            file.appendText("${reserva.id},${reserva.descripcion},${reserva.origen},${reserva.destino},${reserva.horaVuelo}")
         } else {
             val targetIdx = lines.indexOf(target)
             lines[targetIdx] = "${reserva.id},${reserva.descripcion},${reserva.origen},${reserva.destino},${reserva.horaVuelo}\n"
             file.writeText("")
-            lines.forEach { file.appendText(it) }
+            lines.forEach { file.appendText("$it\n") }
         }
     }
      override fun read(): List<ReservaVuelo> {
-         val lines = file.readLines()
-         if (lines[0].isEmpty()) return emptyList()
+         val lines = file.readLines().filter { it.isNotEmpty() }
+         if (lines.isEmpty()) return emptyList()
          val linesMap = lines.map {
              val lineSplit = it.split(",")
              ReservaVuelo.recuperaInstancia(lineSplit[0].toInt(),lineSplit[1],lineSplit[2],lineSplit[3], lineSplit[4])

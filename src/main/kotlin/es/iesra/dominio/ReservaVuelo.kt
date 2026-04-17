@@ -36,13 +36,12 @@ class ReservaVuelo private constructor(
             // Validación simple del formato de hora (HH:mm)
             val regex = Regex("^([01]?\\d|2[0-3]):[0-5]\\d\$")
             require(regex.matches(horaVuelo)) { "El formato de la hora debe ser HH:mm" }
-            val reserva = ReservaVuelo(contador, descripcion, origen, destino, horaVuelo)
             contador += 2
+            val reserva = ReservaVuelo(contador, descripcion, origen, destino, horaVuelo)
             return reserva
         }
 
         fun recuperaInstancia(id: Int, descripcion: String, origen: String, destino: String, horaVuelo: String): ReservaVuelo {
-            require("$id,$descripcion,$origen,$destino,$horaVuelo" in File("travelbooker_vuelos.csv").readLines())
             return ReservaVuelo(id,descripcion,origen,destino,horaVuelo)
         }
     }

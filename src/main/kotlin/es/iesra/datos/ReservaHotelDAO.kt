@@ -24,8 +24,8 @@ import java.io.File
          }
      }
     override fun read(): List<ReservaHotel> {
-        val lines = file.readLines()
-        if (lines[0].isEmpty()) return emptyList()
+        val lines = file.readLines().filter { it.isNotEmpty() }
+        if (lines.isEmpty() || lines[0].isEmpty()) return emptyList()
         val linesMap = lines.map {
             val lineSplit = it.split(",")
         ReservaHotel.recuperaInstancia(lineSplit[0].toInt(),lineSplit[1],lineSplit[2],lineSplit[3].toInt())
