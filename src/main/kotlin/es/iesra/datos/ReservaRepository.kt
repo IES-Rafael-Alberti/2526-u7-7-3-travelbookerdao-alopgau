@@ -37,4 +37,9 @@ class ReservaRepository(private val hotelDAO: DAO<ReservaHotel>, private val fli
             else -> ""
     }
     }
+
+    override fun maxId(reservas: List<Reserva>): Int {
+        if (reservas.isEmpty()) return 0
+        return reservas.maxByOrNull { it.id }?.id ?: -1
+    }
 }

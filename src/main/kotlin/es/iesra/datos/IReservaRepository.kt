@@ -10,4 +10,5 @@ interface IReservaRepository {
     fun findById(id: Int): Reserva?
     fun register(reserva: Reserva)
     fun delete(reserva: Reserva?)
+    fun maxId(reservas: List<Reserva>): Int
 }

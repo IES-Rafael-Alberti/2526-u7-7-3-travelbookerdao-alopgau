@@ -32,7 +32,8 @@ class ConsolaUI(private val reservaService: IReservaService) : IUserInterface {
         println("\n----- Gestor de Reservas -----")
         println("1. Crear nueva reserva")
         println("2. Listar reservas")
-        println("3. Salir")
+        println("3. Borrar reservas")
+        println("4. Salir")
         print("Seleccione una opción: ")
     }
 
