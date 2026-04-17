@@ -23,6 +23,9 @@ Los ficheros se encuentran en el directorio raíz del proyecto por facilidad a l
 
 En el código nuevo tenemos varios ejemplos de manejo de errores, como es el caso del método `read()`, que no mapea el archivo si detecta que el mismo está vacío, al mismo tiempo que filtra las líneas vacías antes de leerlas para que no haya problemas cuando hacemos el `split()`. También encontramos varios ejemplos de gestión de errores en el código ya introducido, como es el caso de que, si se introduce un dato inválido en el número de noches de la reserva del hotel, este dato toma el valor de `1` por defecto, haciendo así que el programa pueda seguir funcionando correctamente.
 
+https://github.com/IES-Rafael-Alberti/2526-u7-7-3-travelbookerdao-alopgau/blob/07aa216e736d7c548853b26a3fdd10975da44fd2/src/main/kotlin/es/iesra/datos/ReservaHotelDAO.kt#L26-L32
+
+https://github.com/IES-Rafael-Alberti/2526-u7-7-3-travelbookerdao-alopgau/blob/07aa216e736d7c548853b26a3fdd10975da44fd2/src/main/kotlin/es/iesra/presentacion/ConsolaUI.kt#L78-L83
 
 # [CE 7.e] 3.a Describe la forma de acceso para leer información
 
@@ -33,3 +36,5 @@ El unico acceso a escritura de los archivos es mediante el método `create()` de
 
 # 3.c Describe la forma de acceso para actualizar información. Pon ejemplos de código (enlace permanente al código en GitHub).
 El acceso a actualizar información es el mismo método `create()`, ya que si este mismo detecta que ya existía una reserva con el mismo ID, sobreescribirá los datos de la reserva antigua por la nueva
+
+https://github.com/IES-Rafael-Alberti/2526-u7-7-3-travelbookerdao-alopgau/blob/07aa216e736d7c548853b26a3fdd10975da44fd2/src/main/kotlin/es/iesra/datos/ReservaVueloDAO.kt#L5-L21
